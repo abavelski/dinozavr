@@ -1,0 +1,22 @@
+node:
+  timePlans:
+    -
+      startHour: 0
+      endHour: 15
+      charges:
+        -
+          ratingPlugin: 'initial'
+          rate: 0.49
+        -
+          ratingPlugin: 'voiceStandard'
+          rate: 0.19
+    -
+      startHour: 19
+      endHour: 23
+      charges:
+        -
+          ratingPlugin: 'initial'
+          rate: 1.49
+        -
+          ratingPlugin: 'voiceStandard'
+          rate: 0.29

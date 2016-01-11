@@ -1,0 +1,18 @@
+node:
+  timePlans:
+    default:
+      -
+        startHour: 0
+        endHour: 23
+        charges:
+          -
+            ratingPlugin: 'voiceStandard'
+            rate: 0.99
+    sunday:
+      -
+        startHour: 0
+        endHour: 23
+        charges:
+          -
+            ratingPlugin: 'voiceStandard'
+            rate: 0.09
