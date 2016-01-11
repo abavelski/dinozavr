@@ -3,6 +3,21 @@ let charge = require('./charge'),
     findTimePlan = require('./findTimePlan'),
     locationPlugins = require('./plugins/location');
 
+function chargeNode(node, req) {
+  if (node.charges) {
+    return charge(node.charges, req);
+  } else if (node.timePlans) {
+
+    let timePlan = findTimePlan(node.timePlans, req);
+    if (!timePlan.err) {
+      return charge(timePlan.charges, req);
+    }
+    return timePlan.err;
+  } else {
+      return 'charges-not-defined';
+  }
+}
+
 class Rating {
 
   rate(req, tp) {
@@ -13,30 +28,18 @@ class Rating {
     if (!tp.node) {
       return 'traffic-plan-missing-root-node';
     }
-    if (tp.node.charges) {
-      return charge(tp.node.charges, req);
-    } else if (tp.locationPlugin) {
-      let plugin = locationPlugins[locationPlugin];
-      let timePlans = plugin.getTimePlans(tp.node, req);
-      let timePlan = findTimePlan(timePlans, req);
-      if (!timePlan.err) {
-        return charge(timePlan.charges, req);
+    if (tp.locationPlugin) {
+      let plugin = locationPlugins[tp.locationPlugin];
+      let node = plugin.getNode(tp.node, req);
+      if (node.err) {
+        return node.err;
       }
-      return timePlan.err;
+      return chargeNode(node, req);
 
-    } else if (tp.node.timePlans) {
-
-      let timePlan = findTimePlan(tp.node.timePlans, req);
-      if (!timePlan.err) {
-        return charge(timePlan.charges, req);
-      }
-      return timePlan.err;
     } else {
-        return 'charges-not-defined';
+        return chargeNode(tp.node, req);
     }
   }
 }
-
-
 
 module.exports = new Rating();

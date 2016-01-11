@@ -75,6 +75,26 @@ describe("Rating specs", function() {
     expect(res[0]).toEqual({ description: 'Voice Standard', total: 1.98 });
   });
 
+  it ("location rating missing destination", function() {
+    var rr = {
+      chargeDate : new Date("January 1, 2015 20:25:00"),
+      units : 65
+    }
+    var res = rating.rate(rr, testPlans.LOCATIONS);
+    expect(res).toEqual('missing-destination')
+  });
+
+  it ("location rating", function() {
+    var rr = {
+      chargeDate : new Date("January 1, 2015 20:25:00"),
+      units : 65,
+      destination: '37323121931'
+    }
+    var res = rating.rate(rr, testPlans.LOCATIONS);
+    console.log(res);
+    //expect(res).toEqual('missing-destination')
+  });
+
 
 
 

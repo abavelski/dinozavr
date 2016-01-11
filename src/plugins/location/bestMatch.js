@@ -1,24 +1,29 @@
 'use strict';
 
-function parseLocation(location, destination, visitedLocations) {
-  visitedLocations.push(location);
+function parseNodes(location, destination, nodes) {
+  nodes.push(location);
   let children = location.children;
   if (children) {
     children.forEach(function(child) {
       let subNumber = child.subNumber;
       if (destination.startsWith(subNumber)) {
-        parseLocation(child, destination.substring(subNumber.length), visitedLocations);
+        parseNodes(child, destination.substring(subNumber.length), nodes);
       }
     });
   }
 }
 
 class BestMatch {
-  getTimePlans(node, request) {
-      let visitedLocations = [];
-      parseLocation(node, request.destination, visitedLocations);
-      console.log(visitedLocations);
+
+  getNode(node, req) {
+    if (!req.destination) {
+      return {err: "missing-destination"};
+    }
+      let nodes = [];
+      parseNodes(node, req.destination, nodes);
+      return nodes.pop();
   }
+
 }
 
 module.exports = new BestMatch();

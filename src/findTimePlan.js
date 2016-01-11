@@ -11,7 +11,6 @@ module.exports = function(timePlans, req) {
     plans = timePlans;
   }
 
-
   var filteredTimePlans = plans.filter(function(timePlan) {
     var hour = req.chargeDate.getHours();
     return timePlan.startHour <= hour && hour <= timePlan.endHour;

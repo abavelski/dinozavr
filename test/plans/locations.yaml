@@ -1,0 +1,19 @@
+locationPlugin: 'bestMatch'
+node:
+  charges:
+    -
+      ratingPlugin: 'voiceStandard'
+      rate: 0.19
+  children:
+    -
+      subNumber: '373'
+      charges:
+        -
+          ratingPlugin: 'voiceStandard'
+          rate: 0.99
+    -
+      subNumber: '7'
+      charges:
+        -
+          ratingPlugin: 'voiceStandard'
+          rate: 0.49
