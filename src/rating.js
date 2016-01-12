@@ -1,22 +1,6 @@
 'use strict';
-let charge = require('./charge'),
-    findTimePlan = require('./findTimePlan'),
-    locationPlugins = require('./plugins/location');
-
-function chargeNode(node, req) {
-  if (node.charges) {
-    return charge(node.charges, req);
-  } else if (node.timePlans) {
-
-    let timePlan = findTimePlan(node.timePlans, req);
-    if (!timePlan.err) {
-      return charge(timePlan.charges, req);
-    }
-    return timePlan.err;
-  } else {
-      return 'charges-not-defined';
-  }
-}
+let locationPlugins = require('./plugins/location'),
+chargeNode = require('./chargeNode');
 
 class Rating {
 
