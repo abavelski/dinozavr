@@ -11,8 +11,9 @@ module.exports = function (node, req) {
     if (!timePlan.err) {
       return charge(timePlan.charges, req);
     }
-    return timePlan.err;
+
+  return timePlan.err;
   } else {
-      return 'charges-not-defined';
+    return 'charges-not-defined';
   }
 };

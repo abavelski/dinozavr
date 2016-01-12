@@ -1,6 +1,6 @@
 'use strict';
-let locationPlugins = require('./plugins/location'),
-chargeNode = require('./chargeNode');
+let bestMatch = require('./bestMatch'),
+    chargeNode = require('./chargeNode');
 
 class Rating {
 
@@ -12,9 +12,8 @@ class Rating {
     if (!tp.node) {
       return 'traffic-plan-missing-root-node';
     }
-    if (tp.locationPlugin) {
-      let plugin = locationPlugins[tp.locationPlugin];
-      let node = plugin.getNode(tp.node, req);
+    if (tp.node.children) {
+      let node = bestMatch.getNode(tp.node, req);
       if (node.err) {
         return node.err;
       }
